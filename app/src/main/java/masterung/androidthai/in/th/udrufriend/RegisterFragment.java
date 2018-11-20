@@ -136,12 +136,27 @@ public class RegisterFragment extends Fragment {
 
     private String findURlavata(String nameString) {
 
-        String result = null;
 
-        result = "Hello " + nameString;
+        return myFindURL(nameString);
+    }
 
+    private String myFindURL(String nameString) {
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference = firebaseStorage.getReference();
 
-        return result;
+        final String[] strings = new String[1];
+        storageReference.child("Avata").child(nameString)
+                .getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        strings[0] = uri.toString();
+                        return;
+
+                    }
+                });
+        return strings[0];
     }
 
     private boolean checkSpace(String nameString,
