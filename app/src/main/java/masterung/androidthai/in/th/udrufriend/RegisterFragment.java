@@ -83,6 +83,7 @@ public class RegisterFragment extends Fragment {
 
     }
 
+
     private void uploadToFirebase(String nameString, String emailString, String passwordString) {
 
     }
