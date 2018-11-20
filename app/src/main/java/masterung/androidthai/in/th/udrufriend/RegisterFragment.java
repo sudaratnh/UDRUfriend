@@ -33,6 +33,13 @@ public class RegisterFragment extends Fragment {
         ((MainActivity) getActivity()).getSupportActionBar().setSubtitle(R.string.message_have_space);
         ((MainActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
     }
 
     public RegisterFragment() {
