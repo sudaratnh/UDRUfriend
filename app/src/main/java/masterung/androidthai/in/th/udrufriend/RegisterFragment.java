@@ -72,8 +72,33 @@ public class RegisterFragment extends Fragment {
 
         if (aBoolean) {
             myAlert.normalDialog("No Avata", "Please Choose Image for Avata");
+        } else if (checkSpace(nameString, emailString, passwordString, rePasswordString)) {
+            myAlert.normalDialog(getString(R.string.title_have_space), getString(R.string.message_have_space));
+        } else if (passwordString.equals(rePasswordString)) {
+//            Password Math
+            uploadToFirebase(nameString, emailString, passwordString);
+        } else {
+            myAlert.normalDialog("Password Not Math", "Please Type Password agains");
         }
 
+    }
+
+    private void uploadToFirebase(String nameString, String emailString, String passwordString) {
+
+    }
+
+    private boolean checkSpace(String nameString,
+                               String emailString,
+                               String passwordString,
+                               String rePasswordString) {
+
+        boolean result = false;
+
+        if (nameString.isEmpty() || emailString.isEmpty() || passwordString.isEmpty() || rePasswordString.isEmpty()) {
+            result = true;
+        }
+
+        return result;
     }
 
     @Override
