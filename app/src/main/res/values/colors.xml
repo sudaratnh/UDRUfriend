@@ -3,4 +3,7 @@
     <color name="colorPrimary">#0277bd</color>
     <color name="colorPrimaryDark">#004c8c</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="text_click">#258bdf</color>
+
 </resources>
