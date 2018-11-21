@@ -28,6 +28,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -140,7 +142,7 @@ public class RegisterFragment extends Fragment {
 
     }   // upload
 
-    private void registerFirebase(String nameString,
+    private void registerFirebase(final String nameString,
                                   String emailString,
                                   String passwordString,
                                   String pathUrlString) {
@@ -153,6 +155,19 @@ public class RegisterFragment extends Fragment {
 
                         if (task.isSuccessful()) {
 
+                            FirebaseAuth firebaseAuth1 = FirebaseAuth.getInstance();
+                            final FirebaseUser firebaseUser = firebaseAuth1.getCurrentUser();
+                            UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest
+                                    .Builder().setDisplayName(nameString).build();
+                            firebaseUser.updateProfile(userProfileChangeRequest)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("21novV1", "DisplayName ==> " + firebaseUser.getDisplayName());
+                                            Log.d("21novV1", "userUID ==> " + firebaseUser.getUid());
+                                        }
+                                    });
+
                         } else {
                             MyAlert myAlert = new MyAlert(getActivity());
                             myAlert.normalDialog("Cannot Register", task.getException().toString());
@@ -160,7 +175,7 @@ public class RegisterFragment extends Fragment {
 
                     }   // Complete
                 });
-        
+
 
 
     }   // register
