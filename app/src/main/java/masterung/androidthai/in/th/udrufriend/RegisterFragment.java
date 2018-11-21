@@ -30,6 +30,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -145,7 +147,7 @@ public class RegisterFragment extends Fragment {
     private void registerFirebase(final String nameString,
                                   String emailString,
                                   String passwordString,
-                                  String pathUrlString) {
+                                  final String pathUrlString) {
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.createUserWithEmailAndPassword(emailString, passwordString)
@@ -165,6 +167,7 @@ public class RegisterFragment extends Fragment {
                                         public void onSuccess(Void aVoid) {
                                             Log.d("21novV1", "DisplayName ==> " + firebaseUser.getDisplayName());
                                             Log.d("21novV1", "userUID ==> " + firebaseUser.getUid());
+                                            createDatabase(firebaseUser.getUid(), pathUrlString, 17.398643, 102.793634, nameString);
                                         }
                                     });
 
@@ -179,6 +182,31 @@ public class RegisterFragment extends Fragment {
 
 
     }   // register
+
+    private void createDatabase(String uidString,
+                                String pathUrlString,
+                                double latDouble,
+                                double lngDouble,
+                                String nameString) {
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference()
+                .child("User").child(uidString);
+
+        DatabaseModel databaseModel = new DatabaseModel(uidString, pathUrlString, nameString, latDouble, lngDouble);
+
+        databaseReference.setValue(databaseModel)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Intent intent = new Intent(getActivity(), ServiceActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                });
+
+
+    }   // createDatabase
 
 
     private boolean checkSpace(String nameString,
