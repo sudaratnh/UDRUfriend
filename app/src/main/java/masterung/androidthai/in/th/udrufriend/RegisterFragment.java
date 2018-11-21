@@ -160,6 +160,7 @@ public class RegisterFragment extends Fragment {
 
                     }   // Complete
                 });
+        
 
 
     }   // register
