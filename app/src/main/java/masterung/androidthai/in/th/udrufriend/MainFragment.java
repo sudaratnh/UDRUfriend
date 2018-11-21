@@ -25,7 +25,9 @@ public class MainFragment extends Fragment {
 //        Check Status
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getActivity(), ServiceActivity.class));
+            Intent intent = new Intent(getActivity(), ServiceActivity.class);
+            startActivity(intent);
+//            startActivity(new Intent(getActivity(), ServiceActivity.class));
             getActivity().finish();
         }
 
